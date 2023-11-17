@@ -1,21 +1,19 @@
-//
-//  ContentView.swift
-//  MapApp
-//
 //  Created by Shazia Vohra on 2023-11-11.
-//
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
+    @StateObject private var viewModel = MapViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
+            .ignoresSafeArea()
+            .accentColor(Color.pink)
+            .onAppear{
+                viewModel.checkIfLocationServIsEnabled()
+            }
+        .mapStyle(.hybrid(elevation: .realistic))
     }
 }
 
